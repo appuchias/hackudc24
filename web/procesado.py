@@ -5,14 +5,19 @@ import pandas as pd
 def consumptions_csv_to_df(path: str = "dataset/consumptions.csv") -> pd.DataFrame:
     consumptions = pd.read_csv(path, delimiter=";")
 
-    # Crear campo de fecha y hora
+    # Adaptar campos
     consumptions["Fecha_Hora"] = pd.to_datetime(
         consumptions["Fecha"] + " " + (consumptions["Hora"] - 1).astype(str) + ":00:00",
         format="%d/%m/%Y %H:%M:%S",
     )
-
-    # Eliminar campos de fecha y hora
+    consumptions["Ano"] = consumptions["Fecha_Hora"].dt.year
+    consumptions["Mes"] = consumptions["Fecha_Hora"].dt.month
+    consumptions["Dia"] = consumptions["Fecha_Hora"].dt.day
+    consumptions["Hora"] = consumptions["Fecha_Hora"].dt.hour
     consumptions = consumptions.drop(columns=["Fecha", "Hora"])
+    consumptions["Consumo_kWh"] = (
+        consumptions["Consumo_kWh"].str.replace(",", ".").astype(float)
+    )
 
     return consumptions
 
