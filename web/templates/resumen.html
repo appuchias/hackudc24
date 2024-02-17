@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block title %}Resumen{% endblock title %}
+
+{% block body %}
+<div id="resumen">
+    <div class="container">
+        <h1 class="title">Resumen</h1>
+
+        <div style="width: 1000px; margin: 0 auto;"><canvas id="acquisitions"></canvas></div>
+    </div>
+
+    {{ data.0|tojson }}
+</div>
+{% endblock body %}
+
+{% block scripts %}
+<script src="/static/js/chart.min.js"></script>
+<script type="module">
+    const data = {{ data.0|tojson }};
+
+    new Chart(
+        document.getElementById('acquisitions'),
+        {
+            type: 'bar',
+            data: {
+                labels: data.map(row => row.Fecha_Hora),
+                datasets: [
+                    {
+                        label: 'Consumo por hora',
+                        // data: data.map(row => parseFloat(row.Consumo_KWh.replace(',', '.'))),
+                        data: data.map(row => row.Consumo_KWh),
+                    }
+                ]
+            }
+        }
+    );
+</script>
+{% endblock scripts %}

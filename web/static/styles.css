@@ -1,19 +1,25 @@
-html {
-    font-size: 16px;
-    font-family: Courier;
-
-    /* box-sizing: content-box; */
-}
-
+/* Definiciones base */
 body {
     margin: 0;
     padding: 0;
+
+    font-size: 16px;
+    font-family: "Inter" !important
 }
 
+/* Clases "plantilla" */
 .text {
     color: #111;
 }
 
+h1.title {
+    font-size: 3rem;
+    text-align: center;
+
+    margin-bottom: 1.5rem;
+}
+
+/* Plantilla 'base.html' */
 nav {
     background-color: #111;
     color: #fff;
@@ -38,16 +44,35 @@ nav a:hover {
 }
 
 nav a.logo:hover {
-    animation: rotateAnimation 5s ease-in-out infinite;
+    /* animation: infiniteEasedRotation 5s ease-in-out infinite; */
+    animation: quickWave .5s ease-in-out;
 }
 
-@keyframes rotateAnimation {
+@keyframes infiniteEasedRotation {
     0% {
         transform: rotate(0deg);
     }
 
     100% {
         transform: rotate(720deg);
+    }
+}
+
+@keyframes quickWave {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    33% {
+        transform: rotate(10deg);
+    }
+
+    67% {
+        transform: rotate(-10deg);
+    }
+
+    100% {
+        transform: rotate(0deg);
     }
 }
 
@@ -65,7 +90,8 @@ nav a.logo:hover {
     height: 1.5em;
 }
 
-#home {
+/* Página 'inicio' */
+#inicio {
     color: #fff;
     height: calc(100vh - 40px);
 
@@ -74,7 +100,7 @@ nav a.logo:hover {
     background-position: center;
 }
 
-#home .home-info {
+#inicio .home-info {
     color: #fff;
     text-align: center;
 
@@ -83,8 +109,16 @@ nav a.logo:hover {
     margin: 0 auto;
 }
 
-#home h1 {
+#inicio h1 {
     padding-top: 35vh;
 
     font-size: 5rem;
+}
+
+/* Página 'resumen' */
+#resumen {
+    background-color: #FFF0DC;
+    color: #111;
+    padding: 1rem;
+    height: calc(100vh - 40px);
 }

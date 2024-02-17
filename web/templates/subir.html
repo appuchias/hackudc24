@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block body %}
+<div id="subir">
+    <div class="container">
+        <!-- Subir CSVs de hasta 10MB -->
+        <form action="/subir" method="post" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="file">Selecciona un archivo</label>
+                <input type="file" class="form-control-file" id="file" name="file" accept=".csv" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Subir</button>
+        </form>
+    </div>
+</div>
+{% endblock %}
