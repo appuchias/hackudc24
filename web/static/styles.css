@@ -118,6 +118,10 @@ nav a.logo:hover {
 }
 
 /* Página 'resumen' */
+#resumen {
+    padding-bottom: 3rem;
+}
+
 #resumen h2 {
     margin-top: 1rem;
 }

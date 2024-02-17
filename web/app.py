@@ -4,7 +4,8 @@ from datetime import date, datetime
 from flask import Flask, render_template, redirect, abort, request
 from werkzeug.utils import secure_filename
 
-from procesado import consumptions_csv_to_df
+from medias_dinamicas import peticion
+from procesado import consumptions_csv_to_df, anadir_precios
 from resumen import *
 
 app = Flask(__name__)
@@ -25,6 +26,9 @@ def subir():
         archivo = request.files[request.files.keys().__iter__().__next__()]
         newfilename = f"{datetime.now().timestamp()}_{secure_filename(archivo.filename)}"  # type: ignore
         archivo.save(f"{UPLOADS_FOLDER}/{newfilename}")
+
+        # Añadir precios
+        anadir_precios(f"{UPLOADS_FOLDER}/{newfilename}")
 
         return redirect(f"/resumen/{newfilename}")
 
@@ -72,9 +76,28 @@ def resumen_filename(filename):
             "dow": consumo_plot_dow.to_dict(orient="records"),
             "horas": consumo_plot_horas.to_dict(orient="records"),
         },
+        precios={"horas": datos_precio_horas(df).to_dict(orient="records")},
     )
 
 
+@app.route("/peticion/<path:filename>", methods=["GET", "POST"])
+def peticion_filename(filename):
+    if request.method == "GET":
+        return render_template("peticion.html", filename=filename)
+
+    df = consumptions_csv_to_df(f"{UPLOADS_FOLDER}/{filename}")
+
+    Hora = request.form.get("Hora", None)
+    DOW = request.form.get("DOW", None)
+    mes = request.form.get("mes", None)
+    año = request.form.get("ano", None)
+
+    avg = peticion(Hora, DOW, mes, año, df)
+
+    return render_template("peticion.html", avg=avg)
+
+
+# HTMX
 # Actualización del gráfico de horas
 @app.route("/horas/<path:filename>", methods=["POST"])
 def horas(filename):

@@ -68,6 +68,20 @@ def datos_consumo_horas(df: pd.DataFrame, dia: date = date(2023, 2, 15)):
     return media_consumo_por_hora
 
 
+def datos_precio_horas(df: pd.DataFrame, dia: date = date(2023, 2, 15)):
+    # Filtrar el DataFrame para el día seleccionado
+    df_dia = df[df["Fecha_Hora"].dt.date == dia]
+
+    # Agrupar por hora y calcular la media de consumo
+    media_precio_por_hora = (
+        df_dia.groupby(df_dia["Fecha_Hora"].dt.hour)["Precio"].mean().reset_index()
+    )
+
+    print(media_precio_por_hora)
+
+    return media_precio_por_hora
+
+
 def datos_consumo_dow(df: pd.DataFrame):
     # Agrupar por día de la semana y calcular la media de consumo
     media_consumo_por_dow = (

@@ -99,6 +99,7 @@
     );
 
     const horas = {{ consumos.horas|tojson }};
+    const precioshoras = {{ precios.horas|tojson }};
     new Chart(
         document.getElementById('horas'),
         {
@@ -109,6 +110,11 @@
                     {
                         label: 'Consumo por horas',
                         data: horas.map(row => row.Consumo_KWh),
+                    }, {
+                        // backgroundColor: '#ff0000',
+                        data: precioshoras.map(row => row.Precio/1000),
+                        label: 'Purok 2',
+                        type: 'line'
                     }
                 ]
             }
