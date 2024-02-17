@@ -1,0 +1,90 @@
+html {
+    font-size: 16px;
+    font-family: Courier;
+
+    /* box-sizing: content-box; */
+}
+
+body {
+    margin: 0;
+    padding: 0;
+}
+
+.text {
+    color: #111;
+}
+
+nav {
+    background-color: #111;
+    color: #fff;
+
+    margin: 0;
+    padding: 1rem inherit;
+
+    display: flex;
+    justify-content: space-between;
+}
+
+nav a {
+    color: #fff;
+    text-decoration: none;
+
+    scale: 1;
+}
+
+nav a:hover {
+    scale: 1.1;
+    transition: 200ms;
+}
+
+nav a.logo:hover {
+    animation: rotateAnimation 5s ease-in-out infinite;
+}
+
+@keyframes rotateAnimation {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(720deg);
+    }
+}
+
+#footer {
+    position: fixed;
+    bottom: 0;
+    padding: 0 10px;
+    width: 100%;
+
+    background: linear-gradient(0deg, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0) 100%);
+    color: #fff;
+}
+
+#footer div {
+    height: 1.5em;
+}
+
+#home {
+    color: #fff;
+    height: calc(100vh - 40px);
+
+    background-image: url('/static/images/fre-sonneveld-q6n8nIrDQHE-unsplash.webp');
+    background-size: cover;
+    background-position: center;
+}
+
+#home .home-info {
+    color: #fff;
+    text-align: center;
+
+    text-shadow: 10px 10px 20px #000;
+
+    margin: 0 auto;
+}
+
+#home h1 {
+    padding-top: 35vh;
+
+    font-size: 5rem;
+}
