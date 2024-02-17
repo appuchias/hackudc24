@@ -15,9 +15,12 @@ def consumptions_csv_to_df(path: str = "dataset/consumptions.csv") -> pd.DataFra
     consumptions["Dia"] = consumptions["Fecha_Hora"].dt.day
     consumptions["Hora"] = consumptions["Fecha_Hora"].dt.hour
     consumptions = consumptions.drop(columns=["Fecha", "Hora"])
-    consumptions["Consumo_kWh"] = (
-        consumptions["Consumo_kWh"].str.replace(",", ".").astype(float)
-    )
+
+    # Cambiar consumo a float si es string
+    if consumptions["Consumo_KWh"].dtype == "O":
+        consumptions["Consumo_KWh"] = (
+            consumptions["Consumo_KWh"].str.replace(",", ".").astype(float)
+        )
 
     return consumptions
 
