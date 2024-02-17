@@ -19,6 +19,11 @@ def home():
     return render_template("inicio.html")
 
 
+@app.route("/sobre-nosotros")
+def about():
+    return render_template("sobre-nosotros.html")
+
+
 @app.route("/subir", methods=["GET", "POST"])
 def subir():
     if request.method == "POST":
@@ -76,7 +81,7 @@ def resumen_filename(filename):
             "dow": consumo_plot_dow.to_dict(orient="records"),
             "horas": consumo_plot_horas.to_dict(orient="records"),
         },
-        precios={"horas": datos_precio_horas(df).to_dict(orient="records")},
+        precios=datos_precio_horas(df).to_dict(orient="records"),
     )
 
 
@@ -94,7 +99,7 @@ def peticion_filename(filename):
 
     avg = peticion(Hora, DOW, mes, año, df)
 
-    return render_template("peticion.html", avg=avg)
+    return f'<h1 id="media">La media es: {round(avg, 5)} kWh</h1>'
 
 
 # HTMX
@@ -112,6 +117,7 @@ def horas(filename):
         consumos=consumo_plot_horas.to_dict(orient="records"),
         dia=fecha,
         filename=filename,
+        precios=datos_precio_horas(df).to_dict(orient="records"),
     )
 
 

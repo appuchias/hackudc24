@@ -6,8 +6,11 @@
         <input type="date" id="dia" name="dia" value="{{ dia }}">
     </form>
     <div style="width: 1000px; margin: 0 auto;"><canvas id="horas"></canvas></div>
+
     <script>
-        var horas = {{ consumos|tojson }};
+        const horas = {{ consumos|tojson }};
+        const precioshoras = {{ precios|tojson }};
+
         new Chart(
             document.getElementById('horas'),
             {
@@ -16,12 +19,18 @@
                     labels: horas.map(row => row.Fecha_Hora),
                     datasets: [
                         {
-                            label: 'Consumo por horas',
+                            label: 'Consumo (KWh)',
                             data: horas.map(row => row.Consumo_KWh),
+                        }, {
+                            data: precioshoras.map(row => row.Precio/1000),
+                            label: 'Precio (€/kWh)',
+                            type: 'line',
+                            
                         }
                     ]
                 }
             }
-        );
+        ).update();
     </script>
 </div>
+

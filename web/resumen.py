@@ -77,8 +77,6 @@ def datos_precio_horas(df: pd.DataFrame, dia: date = date(2023, 2, 15)):
         df_dia.groupby(df_dia["Fecha_Hora"].dt.hour)["Precio"].mean().reset_index()
     )
 
-    print(media_precio_por_hora)
-
     return media_precio_por_hora
 
 

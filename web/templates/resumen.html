@@ -41,7 +41,7 @@
         <div id="horas-wrapper">
             <h2>Consumo por horas del día {{ top.dia.key }}</h2>
             <!-- Form to select day -->
-            <form hx-post="/horas/{{ filename }}" hx-trigger="change throttle:500ms" hx-target="#horas-wrapper">
+            <form hx-post="/horas/{{ filename }}" hx-trigger="change throttle:500ms" hx-target="#horas-wrapper" swap="outerHTML">
                 <label for="dia">Selecciona un día:</label>
                 <input type="date" id="dia" name="dia" value="{{ top.dia.key }}">
             </form>
@@ -99,7 +99,7 @@
     );
 
     const horas = {{ consumos.horas|tojson }};
-    const precioshoras = {{ precios.horas|tojson }};
+    const precioshoras = {{ precios|tojson }};
     new Chart(
         document.getElementById('horas'),
         {
@@ -108,13 +108,13 @@
                 labels: horas.map(row => row.Fecha_Hora),
                 datasets: [
                     {
-                        label: 'Consumo por horas',
+                        label: 'Consumo (KWh)',
                         data: horas.map(row => row.Consumo_KWh),
                     }, {
-                        // backgroundColor: '#ff0000',
                         data: precioshoras.map(row => row.Precio/1000),
-                        label: 'Purok 2',
-                        type: 'line'
+                        label: 'Precio (€/kWh)',
+                        type: 'line',
+                        
                     }
                 ]
             }

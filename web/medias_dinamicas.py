@@ -14,7 +14,7 @@ def peticion(Hora=None, DOW=None, mes=None, año=None, df=None):
     Hora, DOW (día de la semana), mes, año, df"""
 
     mascara = [int(atributo is not None) for atributo in [Hora, DOW, mes, año]]
-    # print(mascara)
+    print(mascara)
 
     avg = []
     for index, row in df.iterrows():  # type: ignore

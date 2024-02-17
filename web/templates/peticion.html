@@ -3,24 +3,24 @@
 {% block title %}Media{% endblock title %}
 
 {% block body %}
-{% if not avg %}
-<form action="/peticion/{{ filename }}" method="post">
+<h1 class="title">Medias dinámicas</h1>
 
-    <label for="Hora">Hora:</label>
-    <input type="text" id="Hora" name="Hora"><br><br>
+<center>
+    <form>
+        <label for="ano">Año:</label>
+        <input type="text" id="ano" name="ano"><br><br>
 
-    <label for="DOW">Día de la semana:</label>
-    <input type="text" id="DOW" name="DOW"><br><br>
+        <label for="mes">Mes:</label>
+        <input type="text" id="mes" name="mes"><br><br>
 
-    <label for="mes">Mes:</label>
-    <input type="text" id="mes" name="mes"><br><br>
+        <label for="DOW">Día de la semana:</label>
+        <input type="text" id="DOW" name="DOW"><br><br>
 
-    <label for="ano">Año:</label>
-    <input type="text" id="ano" name="ano"><br><br>
+        <label for="Hora">Hora:</label>
+        <input type="text" id="Hora" name="Hora"><br><br>
 
-    <input type="submit" value="Enviar">
-</form>
-{% else %}
-<h1>La media es: {{ avg|round(2) }} kWh</h1>
-{% endif %}
+        <div class="btn btn-outline-dark" hx-post="/peticion/{{ filename }}" hx-target="#media">Calcular media</div>
+    </form>
+    <h1 id="media" class="mt-5">La media es: (Pendiente de cálculo)</h1>
+</center>
 {% endblock body %}
