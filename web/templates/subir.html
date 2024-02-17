@@ -3,14 +3,24 @@
 {% block body %}
 <div id="subir">
     <div class="container">
-        <!-- Subir CSVs de hasta 10MB -->
-        <form action="/subir" method="post" enctype="multipart/form-data">
-            <div class="form-group">
-                <label for="file">Selecciona un archivo</label>
-                <input type="file" class="form-control-file" id="file" name="file" accept=".csv" required>
-            </div>
-            <button type="submit" class="btn btn-primary">Subir</button>
-        </form>
+        <h1 class="title">Subir archivo</h1>
+        <p>Sube un archivo .csv con los datos de tu factura eléctrica para obtener información sobre tu consumo</p>
+        <p>El archivo debe seguir el estándar de la CNMC:<br>
+            <code>CUPS;Fecha;Hora;Consumo_kWh;Metodo_obtencion</code><br>
+            <code>ES00X0000000X;dd/mm/aaaa;hh:mm;0.000;R</code>
+        </p>
+        <center class="container rounded p-3">
+            <form action="/subir" method="post" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label class="col-auto" for="file">Selecciona un archivo</label>
+                    <br>
+                    <input class="col-auto form-control-file" type="file" id="file" name="file" accept=".csv" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Subir</button>
+
+                
+            </form>
+        </center>
     </div>
 </div>
 {% endblock %}

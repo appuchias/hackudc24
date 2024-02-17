@@ -4,7 +4,9 @@ body {
     padding: 0;
 
     font-size: 16px;
-    font-family: "Inter" !important
+    font-family: "Inter" !important;
+
+    background-color: #FFF0DC;
 }
 
 /* Clases "plantilla" */
@@ -16,7 +18,7 @@ h1.title {
     font-size: 3rem;
     text-align: center;
 
-    margin-bottom: 1.5rem;
+    margin: 2rem auto;
 }
 
 /* Plantilla 'base.html' */
@@ -24,11 +26,9 @@ nav {
     background-color: #111;
     color: #fff;
 
+    display: flex;
     margin: 0;
     padding: 1rem inherit;
-
-    display: flex;
-    justify-content: space-between;
 }
 
 nav a {
@@ -45,17 +45,8 @@ nav a:hover {
 
 nav a.logo:hover {
     /* animation: infiniteEasedRotation 5s ease-in-out infinite; */
-    animation: quickWave .5s ease-in-out;
-}
-
-@keyframes infiniteEasedRotation {
-    0% {
-        transform: rotate(0deg);
-    }
-
-    100% {
-        transform: rotate(720deg);
-    }
+    animation: quickWave .4s ease-in-out;
+    scale: 1;
 }
 
 @keyframes quickWave {
@@ -63,17 +54,25 @@ nav a.logo:hover {
         transform: rotate(0deg);
     }
 
-    33% {
+    25% {
         transform: rotate(10deg);
     }
 
-    67% {
+    50% {
         transform: rotate(-10deg);
+    }
+
+    75% {
+        transform: rotate(5deg);
     }
 
     100% {
         transform: rotate(0deg);
     }
+}
+
+#content {
+    min-height: calc(100vh - 44px);
 }
 
 #footer {
@@ -84,6 +83,8 @@ nav a.logo:hover {
 
     background: linear-gradient(0deg, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0) 100%);
     color: #fff;
+
+    font-size: 1em;
 }
 
 #footer div {
@@ -93,7 +94,7 @@ nav a.logo:hover {
 /* Página 'inicio' */
 #inicio {
     color: #fff;
-    height: calc(100vh - 40px);
+    min-height: calc(100vh - 44px);
 
     background-image: url('/static/images/fre-sonneveld-q6n8nIrDQHE-unsplash.webp');
     background-size: cover;
@@ -113,12 +114,15 @@ nav a.logo:hover {
     padding-top: 35vh;
 
     font-size: 5rem;
+    font-weight: 600;
 }
 
 /* Página 'resumen' */
 #resumen {
-    background-color: #FFF0DC;
     color: #111;
-    padding: 1rem;
-    height: calc(100vh - 40px);
+}
+
+/* Página 'subir' */
+#subir p {
+    text-align: center;
 }
