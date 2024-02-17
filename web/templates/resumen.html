@@ -4,10 +4,49 @@
 
 {% block body %}
 <div id="resumen">
-    <div class="container">
+    <div class="container text-center">
         <h1 class="title">Resumen</h1>
 
-        <div style="width: 1000px; margin: 0 auto;"><canvas id="acquisitions"></canvas></div>
+        <h2>Resumen del consumo</h2>
+        <div id="resumen">
+            <table>
+                <tr>
+                    <td>El mes con mayor consumo total es </td>
+                    <td>{{ top.mes.key }}</td>
+                    <td>({{ top.mes.consumo }} KWh)</td>
+                </tr>
+                <tr>
+                    <td>El día con mayor consumo total es </td>
+                    <td>{{ top.dia.key }}</td>
+                    <td>({{ top.dia.consumo }} KWh)</td>
+                </tr>
+                <tr>
+                    <td>La hora con mayor consumo de media son las</td>
+                    <td>{{ top.hora.key }}h</td>
+                    <td>({{ top.hora.consumo }} KWh)</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="meses">
+            <h2>Consumo por meses</h2>
+            <div style="width: 1000px; margin: 0 auto;"><canvas id="meses"></canvas></div>
+        </div>
+
+        <div class="dias">
+            <h2>Consumo por días</h2>
+            <div style="width: 1000px; margin: 0 auto;"><canvas id="dow"></canvas></div>
+        </div>
+        
+        <div id="horas-wrapper">
+            <h2>Consumo por horas del día {{ top.dia.key }}</h2>
+            <!-- Form to select day -->
+            <form hx-post="/horas/{{ filename }}" hx-trigger="change throttle:500ms" hx-target="#horas-wrapper">
+                <label for="dia">Selecciona un día:</label>
+                <input type="date" id="dia" name="dia" value="{{ top.dia.key }}">
+            </form>
+            <div style="width: 1000px; margin: 0 auto;"><canvas id="horas"></canvas></div>
+        </div>
     </div>
 </div>
 {% endblock body %}
@@ -15,19 +54,61 @@
 {% block scripts %}
 <script src="/static/js/chart.min.js"></script>
 <script type="module">
-    const data = {{ data.0|tojson }};
+    const nombres_meses = [
+        'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
+        'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'
+    ];
+    const nombres_dow = [
+        'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'
+    ];
 
+    const meses = {{ consumos.meses|tojson }};
     new Chart(
-        document.getElementById('acquisitions'),
+        document.getElementById('meses'),
         {
             type: 'bar',
             data: {
-                labels: data.map(row => row.Fecha_Hora),
+                // labels: meses.map(row => row.Fecha_Hora),
+                labels: meses.map(row => nombres_meses[row.Fecha_Hora - 1]),
                 datasets: [
                     {
-                        label: 'Consumo por hora',
-                        // data: data.map(row => parseFloat(row.Consumo_KWh.replace(',', '.'))),
-                        data: data.map(row => row.Consumo_KWh),
+                        label: 'Consumo por meses',
+                        data: meses.map(row => row.Consumo_KWh),
+                    }
+                ]
+            }
+        }
+    );
+
+    const dow = {{ consumos.dow|tojson }};
+    new Chart(
+        document.getElementById('dow'),
+        {
+            type: 'bar',
+            data: {
+                //labels: dow.map(row => row.Fecha_Hora),
+                labels: dow.map(row => nombres_dow[row.Fecha_Hora]),
+                datasets: [
+                    {
+                        label: 'Consumo por día de la semana',
+                        data: dow.map(row => row.Consumo_KWh),
+                    }
+                ]
+            }
+        }
+    );
+
+    const horas = {{ consumos.horas|tojson }};
+    new Chart(
+        document.getElementById('horas'),
+        {
+            type: 'bar',
+            data: {
+                labels: horas.map(row => row.Fecha_Hora),
+                datasets: [
+                    {
+                        label: 'Consumo por horas',
+                        data: horas.map(row => row.Consumo_KWh),
                     }
                 ]
             }

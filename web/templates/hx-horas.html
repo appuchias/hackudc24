@@ -1,0 +1,27 @@
+<div id="horas-wrapper">
+    <h2>Consumo por horas del día {{ dia }}</h2>
+    <!-- Form to select day -->
+    <form hx-post="/horas/{{ filename }}" hx-trigger="change throttle:500ms" hx-target="#horas-wrapper">
+        <label for="dia">Selecciona un día:</label>
+        <input type="date" id="dia" name="dia" value="{{ dia }}">
+    </form>
+    <div style="width: 1000px; margin: 0 auto;"><canvas id="horas"></canvas></div>
+    <script>
+        var horas = {{ consumos|tojson }};
+        new Chart(
+            document.getElementById('horas'),
+            {
+                type: 'bar',
+                data: {
+                    labels: horas.map(row => row.Fecha_Hora),
+                    datasets: [
+                        {
+                            label: 'Consumo por horas',
+                            data: horas.map(row => row.Consumo_KWh),
+                        }
+                    ]
+                }
+            }
+        );
+    </script>
+</div>

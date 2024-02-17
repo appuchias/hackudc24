@@ -118,9 +118,22 @@ nav a.logo:hover {
 }
 
 /* Página 'resumen' */
-#resumen {
-    color: #111;
+#resumen h2 {
+    margin-top: 1rem;
 }
+
+#resumen table {
+    margin: 0 auto;
+}
+
+#resumen table td:nth-child(1) {
+    text-align: end;
+}
+
+#resumen table td:nth-child(2) {
+    text-align: start;
+}
+
 
 /* Página 'subir' */
 #subir p {
