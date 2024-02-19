@@ -12,6 +12,6 @@ Nuestra entrega a HackUDC 2024
 - Xoel García
 - Antón Liñares
 
-# Liccencia
+# Licencia
 Proyecto licenciado bajo la AGPL 3.0.
 Licencia completa en [LICENSE](LICENSE)
